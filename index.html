@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S.U.N.D.A.Y — AI Desktop Assistant</title>
+  
+  <!-- Sci-Fi & Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for HUD -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/core.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/hud.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="sunday-hud-theme">
+
+  <!-- Ambient Holographic Background FX -->
+  <div class="hud-ambient-glow"></div>
+  <div class="hud-scanline-overlay"></div>
+  <div class="hud-grid-background"></div>
+
+  <!-- Main HUD Application Shell -->
+  <div id="app" class="hud-container">
+    
+    <!-- Top System Header Bar -->
+    <header class="hud-top-bar">
+      <div class="top-bar-left">
+        <div class="hud-brand">
+          <span class="brand-bracket">[</span>
+          <span class="brand-name">S.U.N.D.A.Y</span>
+          <span class="brand-version">v2.4.0_SYS</span>
+          <span class="brand-bracket">]</span>
+        </div>
+        <div class="sys-pulse-indicator">
+          <span class="pulse-dot"></span>
+          <span class="pulse-label">NEURAL INTERFACE ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="top-bar-center">
+        <div class="hud-telemetry-ticker" id="hudTelemetryTicker">
+          <span class="ticker-item"><i class="fa-solid fa-microchip"></i> QUANTUM CORE: <span class="text-accent">ONLINE</span></span>
+          <span class="ticker-separator">///</span>
+          <span class="ticker-item"><i class="fa-solid fa-shield-halved"></i> PROTOCOL: <span class="text-accent">SECURE</span></span>
+          <span class="ticker-separator">///</span>
+          <span class="ticker-item"><i class="fa-solid fa-wave-square"></i> AUDIO SUBSYSTEM: <span class="text-accent" id="topAudioStatus">IDLE</span></span>
+        </div>
+      </div>
+
+      <div class="top-bar-right">
+        <div class="top-quick-clock">
+          <span id="topBarClock">00:00:00</span>
+          <span class="clock-zone">UTC+05:30</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main 3-Column Layout -->
+    <main class="hud-main-grid">
+      
+      <!-- ==================== LEFT SECTION: S.U.N.D.A.Y CORE ==================== -->
+      <section class="hud-panel panel-left-core" id="corePanel" aria-label="S.U.N.D.A.Y Core Section">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="hud-icon"><i class="fa-solid fa-atom"></i></span>
+            <h2 class="panel-title">S.U.N.D.A.Y CORE</h2>
+          </div>
+          <div class="core-state-badge" id="coreStateBadge">
+            <span class="state-indicator-dot"></span>
+            <span class="state-indicator-text" id="coreStateText">IDLE</span>
+          </div>
+        </div>
+
+        <div class="core-viewport">
+          <!-- Canvas for real-time multi-layered energy particle sphere -->
+          <div class="core-canvas-wrapper">
+            <canvas id="sundayCoreCanvas" width="460" height="460"></canvas>
+            
+            <!-- Concentric SVG HUD Rings & Tech Overlays -->
+            <div class="core-hud-ring ring-outer-scan"></div>
+            <div class="core-hud-ring ring-tech-ticks"></div>
+            <div class="core-hud-ring ring-data-reticle"></div>
+          </div>
+
+          <!-- Real-time Voice Waveform Visualizer -->
+          <div class="voice-waveform-container">
+            <div class="waveform-header">
+              <span class="wf-label"><i class="fa-solid fa-waveform-lines"></i> VOICE CORE FREQUENCY</span>
+              <span class="wf-state" id="waveformStatus">STANDBY</span>
+            </div>
+            <canvas id="voiceWaveformCanvas" width="340" height="42"></canvas>
+          </div>
+        </div>
+
+        <div class="core-footer-telemetry">
+          <div class="telemetry-stat">
+            <span class="stat-label">ENERGY OUTPUT</span>
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="energyOutputFill" style="width: 45%;"></div>
+            </div>
+            <span class="stat-val" id="energyOutputVal">45.2%</span>
+          </div>
+
+          <div class="telemetry-stat">
+            <span class="stat-label">CORE FREQUENCY</span>
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="coreFreqFill" style="width: 68%;"></div>
+            </div>
+            <span class="stat-val" id="coreFreqVal">432.0 Hz</span>
+          </div>
+
+          <div class="telemetry-stat">
+            <span class="stat-label">RESONANCE FLUX</span>
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="resonanceFill" style="width: 32%;"></div>
+            </div>
+            <span class="stat-val" id="resonanceVal">0.984</span>
+          </div>
+        </div>
+
+        <!-- Panel Corner Accents -->
+        <div class="corner-bracket top-left"></div>
+        <div class="corner-bracket top-right"></div>
+        <div class="corner-bracket bottom-left"></div>
+        <div class="corner-bracket bottom-right"></div>
+      </section>
+
+      <!-- ==================== CENTER SECTION: CHAT & CONVERSATION ==================== -->
+      <section class="hud-panel panel-center-chat" id="chatPanel" aria-label="Conversation Console">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="hud-icon"><i class="fa-solid fa-terminal"></i></span>
+            <h2 class="panel-title">CHAT & CONVERSATION</h2>
+          </div>
+          <div class="chat-header-actions">
+            <button class="hud-mini-btn" id="clearChatBtn" title="Clear Console History">
+              <i class="fa-solid fa-rotate-left"></i> RESET CONSOLE
+            </button>
+            <div class="chat-status-pill">
+              <span class="status-dot green"></span>
+              <span>FEED ACTIVE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conversation History Console -->
+        <div class="conversation-log" id="conversationLog">
+          <!-- Initial S.U.N.D.A.Y Welcome Message -->
+          <div class="chat-message message-system">
+            <div class="message-meta">
+              <span class="meta-tag">[ SYSTEM DIRECTIVE ]</span>
+              <span class="meta-time" id="systemInitTime">--:--:--</span>
+            </div>
+            <div class="message-content">
+              <p>S.U.N.D.A.Y Core Neural Subsystem initialized. Audio telemetry online. Awaiting commands...</p>
+            </div>
+          </div>
+
+          <div class="chat-message message-sunday">
+            <div class="message-sender">
+              <span class="sender-avatar"><i class="fa-solid fa-atom"></i></span>
+              <span class="sender-name">S.U.N.D.A.Y</span>
+              <span class="message-time">16:25:00</span>
+            </div>
+            <div class="message-bubble">
+              <p>Greetings. I am <strong>S.U.N.D.A.Y</strong>, your dedicated desktop intelligence assistant. All quantum systems and telemetry monitors are operational. How may I assist you today?</p>
+              <div class="bubble-actions">
+                <span class="action-chip"><i class="fa-solid fa-circle-info"></i> Phase 1 Layout Ready</span>
+                <span class="action-chip"><i class="fa-solid fa-microphone"></i> Voice UI Ready</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Typing / Processing Indicator -->
+        <div class="chat-thinking-indicator" id="thinkingIndicator" style="display: none;">
+          <div class="thinking-glow"></div>
+          <span class="thinking-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+          <span class="thinking-text" id="thinkingText">PROCESSING COMMAND...</span>
+        </div>
+
+        <!-- Bottom Command & Voice Input Bar -->
+        <div class="command-input-wrapper">
+          <div class="input-hud-frame">
+            <div class="input-prompt-label">
+              <i class="fa-solid fa-angle-right"></i>
+            </div>
+            <input 
+              type="text" 
+              id="chatTextInput" 
+              class="hud-text-input" 
+              placeholder="Ask S.U.N.D.A.Y anything or enter a desktop command..." 
+              autocomplete="off"
+            />
+            
+            <div class="input-actions-group">
+              <!-- Futuristic Microphone Control Button -->
+              <button 
+                id="voiceToggleBtn" 
+                class="hud-voice-btn state-idle" 
+                title="Toggle Voice Input (Click to Listen)"
+                aria-label="Toggle Voice Input"
+              >
+                <div class="mic-glow-ring"></div>
+                <i class="fa-solid fa-microphone mic-icon"></i>
+                <span class="mic-badge-state">IDLE</span>
+              </button>
+
+              <!-- Send Button -->
+              <button id="sendMessageBtn" class="hud-send-btn" title="Send Command" aria-label="Send Command">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+          <div class="input-keyboard-hint">
+            <span>Press <kbd>Enter</kbd> to transmit command • Click <kbd>Mic</kbd> for voice interaction</span>
+          </div>
+        </div>
+
+        <!-- Panel Corner Accents -->
+        <div class="corner-bracket top-left"></div>
+        <div class="corner-bracket top-right"></div>
+        <div class="corner-bracket bottom-left"></div>
+        <div class="corner-bracket bottom-right"></div>
+      </section>
+
+      <!-- ==================== RIGHT SECTION: HUD TELEMETRY ==================== -->
+      <section class="hud-panel panel-right-hud" id="rightHudPanel" aria-label="System Telemetry Panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="hud-icon"><i class="fa-solid fa-chart-line"></i></span>
+            <h2 class="panel-title">SYSTEM HUD</h2>
+          </div>
+          <div class="hud-signal-bars">
+            <span class="bar active"></span>
+            <span class="bar active"></span>
+            <span class="bar active"></span>
+            <span class="bar active"></span>
+          </div>
+        </div>
+
+        <div class="hud-content-scroll">
+          
+          <!-- TIME & DATE HUD BLOCK -->
+          <div class="hud-block time-date-block">
+            <div class="block-title"><i class="fa-regular fa-clock"></i> CHRONO TELEMETRY</div>
+            <div class="chrono-display">
+              <div class="chrono-time" id="hudLiveTime">00:00:00</div>
+              <div class="chrono-date" id="hudLiveDate">20.08.2026</div>
+            </div>
+            <div class="chrono-sub">
+              <span class="sub-pill"><i class="fa-solid fa-earth-americas"></i> LOCAL SYNC</span>
+              <span class="sub-uptime">UPTIME: <span id="hudUptime">00:04:12</span></span>
+            </div>
+          </div>
+
+          <!-- SYSTEM STATUS BLOCK -->
+          <div class="hud-block status-matrix-block">
+            <div class="block-title"><i class="fa-solid fa-server"></i> CORE MATRIX STATUS</div>
+            
+            <div class="status-row">
+              <span class="status-name">SYSTEM</span>
+              <span class="status-badge state-online"><i class="fa-solid fa-check"></i> ONLINE</span>
+            </div>
+
+            <div class="status-row">
+              <span class="status-name">VOICE STATUS</span>
+              <span class="status-badge state-ready" id="hudVoiceStatusBadge">READY</span>
+            </div>
+
+            <div class="status-row">
+              <span class="status-name">AI ENGINE</span>
+              <span class="status-badge state-standby" id="hudAiStatusBadge">STANDBY (PHASE 1)</span>
+            </div>
+
+            <div class="status-row">
+              <span class="status-name">NETWORK</span>
+              <span class="status-badge state-online" id="hudNetworkBadge">CONNECTED</span>
+            </div>
+
+            <div class="status-row">
+              <span class="status-name">PROCESSING</span>
+              <span class="status-badge state-idle" id="hudProcessBadge">IDLE</span>
+            </div>
+          </div>
+
+          <!-- HARDWARE / SYSTEM DIAGNOSTICS BLOCK -->
+          <div class="hud-block hardware-diag-block">
+            <div class="block-title"><i class="fa-solid fa-gauge-high"></i> DIAGNOSTIC SENSORS</div>
+            
+            <div class="diag-metric">
+              <div class="metric-info">
+                <span>CPU COGNITION LOAD</span>
+                <span id="cpuLoadVal">14%</span>
+              </div>
+              <div class="metric-bar">
+                <div class="metric-bar-fill" id="cpuLoadBar" style="width: 14%;"></div>
+              </div>
+            </div>
+
+            <div class="diag-metric">
+              <div class="metric-info">
+                <span>MEMORY ALLOCATION</span>
+                <span id="memAllocVal">28%</span>
+              </div>
+              <div class="metric-bar">
+                <div class="metric-bar-fill" id="memAllocBar" style="width: 28%;"></div>
+              </div>
+            </div>
+
+            <div class="diag-metric">
+              <div class="metric-info">
+                <span>AUDIO INPUT LEVEL</span>
+                <span id="audioInVal">0 dB</span>
+              </div>
+              <div class="metric-bar">
+                <div class="metric-bar-fill" id="audioInBar" style="width: 5%;"></div>
+              </div>
+            </div>
+
+            <div class="diag-tags-grid">
+              <div class="diag-tag">
+                <span class="tag-lbl">THERMAL</span>
+                <span class="tag-val" id="thermalVal">38°C</span>
+              </div>
+              <div class="diag-tag">
+                <span class="tag-lbl">BATTERY / PWR</span>
+                <span class="tag-val" id="batteryVal">AC POWER</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACTIVE PROTOCOLS BLOCK -->
+          <div class="hud-block protocols-block">
+            <div class="block-title"><i class="fa-solid fa-network-wired"></i> PROTOCOLS & SECURITY</div>
+            <ul class="protocol-list">
+              <li><i class="fa-solid fa-lock"></i> AES-256 Memory Guard: <span class="active-val">ACTIVE</span></li>
+              <li><i class="fa-solid fa-microphone-lines"></i> Audio FFT Analyzer: <span class="active-val">ARMED</span></li>
+              <li><i class="fa-solid fa-robot"></i> Desktop Action Sandbox: <span class="active-val">STANDBY</span></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Panel Corner Accents -->
+        <div class="corner-bracket top-left"></div>
+        <div class="corner-bracket top-right"></div>
+        <div class="corner-bracket bottom-left"></div>
+        <div class="corner-bracket bottom-right"></div>
+      </section>
+
+    </main>
+
+    <!-- Bottom HUD Bar / Footer Controls -->
+    <footer class="hud-bottom-bar">
+      <div class="bottom-bar-left">
+        <span class="sys-badge">S.U.N.D.A.Y DESKTOP INTELLIGENCE</span>
+        <span class="sys-note">PHASE 1 HUD ACTIVE • ALL SUBSYSTEMS NOMINAL</span>
+      </div>
+
+      <div class="bottom-bar-center">
+        <div class="hud-state-stepper">
+          <span class="step-badge active" data-state="idle" id="btnStateIdle">1. IDLE</span>
+          <span class="step-badge" data-state="listening" id="btnStateListening">2. LISTENING</span>
+          <span class="step-badge" data-state="thinking" id="btnStateThinking">3. THINKING</span>
+          <span class="step-badge" data-state="speaking" id="btnStateSpeaking">4. SPEAKING</span>
+          <span class="step-badge" data-state="error" id="btnStateError">5. ERROR</span>
+        </div>
+      </div>
+
+      <div class="bottom-bar-right">
+        <!-- Settings / Profile Trigger Button -->
+        <button id="openSettingsBtn" class="hud-btn-settings" aria-label="Open Settings & Profile">
+          <i class="fa-solid fa-gear"></i>
+          <span>SETTINGS / PROFILE</span>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==================== SETTINGS / PROFILE MODAL ==================== -->
+  <div id="settingsModal" class="hud-modal-overlay" aria-hidden="true" role="dialog">
+    <div class="hud-modal-window">
+      
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="hud-icon"><i class="fa-solid fa-sliders"></i></span>
+          <h3 class="modal-title">S.U.N.D.A.Y CONTROL & PREFERENCES</h3>
+        </div>
+        <button id="closeSettingsBtn" class="modal-close-btn" aria-label="Close Settings">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Sidebar Navigation Tabs -->
+        <div class="modal-tabs-nav">
+          <button class="modal-tab-btn active" data-tab="tabVoice">
+            <i class="fa-solid fa-microphone"></i> Voice & Audio
+          </button>
+          <button class="modal-tab-btn" data-tab="tabAi">
+            <i class="fa-solid fa-brain"></i> AI Engine
+          </button>
+          <button class="modal-tab-btn" data-tab="tabVisuals">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Visuals & Core
+          </button>
+          <button class="modal-tab-btn" data-tab="tabAutomation">
+            <i class="fa-solid fa-desktop"></i> Desktop Tools
+          </button>
+          <button class="modal-tab-btn" data-tab="tabProfile">
+            <i class="fa-solid fa-user-astronaut"></i> Profile
+          </button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="modal-tabs-content">
+          
+          <!-- TAB 1: Voice & Audio -->
+          <div class="tab-pane active" id="tabVoice">
+            <h4 class="pane-heading">VOICE SYNTHESIS & INPUT</h4>
+            
+            <div class="setting-item">
+              <label for="settingVoiceVoice" class="setting-label">Assistant Voice Model</label>
+              <select id="settingVoiceVoice" class="hud-select">
+                <option value="sunday_default">S.U.N.D.A.Y Neural Tone (Default)</option>
+                <option value="sci_fi_amber">A.R.C. Amber Futuristic</option>
+                <option value="system_tts">Operating System TTS</option>
+              </select>
+            </div>
+
+            <div class="setting-item">
+              <label for="settingSpeechSpeed" class="setting-label">Speech Rate: <span id="speedValLabel">1.0x</span></label>
+              <input type="range" id="settingSpeechSpeed" class="hud-slider" min="0.5" max="2.0" step="0.1" value="1.0">
+            </div>
+
+            <div class="setting-item">
+              <label for="settingMicSensitivity" class="setting-label">Microphone Sensitivity: <span id="sensValLabel">75%</span></label>
+              <input type="range" id="settingMicSensitivity" class="hud-slider" min="10" max="100" step="5" value="75">
+            </div>
+          </div>
+
+          <!-- TAB 2: AI Engine -->
+          <div class="tab-pane" id="tabAi">
+            <h4 class="pane-heading">AI INFERENCE & PROVIDER</h4>
+            
+            <div class="setting-item">
+              <label for="settingAiProvider" class="setting-label">Active Provider Architecture</label>
+              <select id="settingAiProvider" class="hud-select">
+                <option value="openrouter">OpenRouter API (Recommended)</option>
+                <option value="openai">OpenAI Compatible</option>
+                <option value="gemini">Google Gemini Architecture</option>
+                <option value="local">Local Ollama Backend</option>
+              </select>
+            </div>
+
+            <div class="setting-item">
+              <label for="settingAiModel" class="setting-label">Model Identifier</label>
+              <input type="text" id="settingAiModel" class="hud-input" value="anthropic/claude-3.5-sonnet:beta" placeholder="e.g. meta-llama/llama-3.1-70b-instruct">
+              <span class="setting-hint">Configured via backend .env without exposing credentials on frontend.</span>
+            </div>
+          </div>
+
+          <!-- TAB 3: Visuals & Core -->
+          <div class="tab-pane" id="tabVisuals">
+            <h4 class="pane-heading">CORE VISUAL FX & HUD RENDERING</h4>
+            
+            <div class="setting-item">
+              <label for="settingCoreParticles" class="setting-label">Energy Particle Density: <span id="particleCountLabel">120</span></label>
+              <input type="range" id="settingCoreParticles" class="hud-slider" min="30" max="250" step="10" value="120">
+            </div>
+
+            <div class="setting-item">
+              <label for="settingGlowIntensity" class="setting-label">Glow Bloom Intensity: <span id="glowValLabel">100%</span></label>
+              <input type="range" id="settingGlowIntensity" class="hud-slider" min="20" max="150" step="5" value="100">
+            </div>
+
+            <div class="setting-item-toggle">
+              <span class="setting-label">Scanline & Grid Ambient Effects</span>
+              <label class="hud-switch">
+                <input type="checkbox" id="settingScanlines" checked>
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TAB 4: Automation Tools -->
+          <div class="tab-pane" id="tabAutomation">
+            <h4 class="pane-heading">DESKTOP AUTOMATION POLICIES</h4>
+            
+            <div class="setting-item-toggle">
+              <span class="setting-label">Require Confirmation For Destructive Actions</span>
+              <label class="hud-switch">
+                <input type="checkbox" id="settingConfirmDestructive" checked disabled>
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+            <span class="setting-hint">Enforced security policy: System modifications require explicit verification.</span>
+
+            <div class="setting-item-toggle" style="margin-top: 12px;">
+              <span class="setting-label">Sandbox File Access to Scratch Directory</span>
+              <label class="hud-switch">
+                <input type="checkbox" id="settingSandboxMode" checked>
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TAB 5: Profile -->
+          <div class="tab-pane" id="tabProfile">
+            <h4 class="pane-heading">USER IDENTITY & ASSISTANT PROTOCOL</h4>
+            
+            <div class="setting-item">
+              <label for="settingUserName" class="setting-label">Commander Call-sign</label>
+              <input type="text" id="settingUserName" class="hud-input" value="Commander">
+            </div>
+
+            <div class="setting-item">
+              <label class="setting-label">Assistant Identity</label>
+              <input type="text" class="hud-input" value="S.U.N.D.A.Y (v2.4.0)" disabled>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="saveSettingsBtn" class="hud-btn-primary">
+          <i class="fa-solid fa-check"></i> SAVE CONFIGURATION
+        </button>
+      </div>
+
+      <!-- Modal Corner Accents -->
+      <div class="corner-bracket top-left"></div>
+      <div class="corner-bracket top-right"></div>
+      <div class="corner-bracket bottom-left"></div>
+      <div class="corner-bracket bottom-right"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript Application Entrypoint & Modular Components -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
