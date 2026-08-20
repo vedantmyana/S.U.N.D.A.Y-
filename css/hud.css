@@ -1,0 +1,284 @@
+/* ==========================================================================
+   S.U.N.D.A.Y AI DESKTOP ASSISTANT — RIGHT HUD PANEL STYLES (css/hud.css)
+   ========================================================================== */
+
+.panel-right-hud {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Signal Bars */
+.hud-signal-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+}
+
+.hud-signal-bars .bar {
+  width: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+}
+
+.hud-signal-bars .bar:nth-child(1) { height: 4px; }
+.hud-signal-bars .bar:nth-child(2) { height: 7px; }
+.hud-signal-bars .bar:nth-child(3) { height: 10px; }
+.hud-signal-bars .bar:nth-child(4) { height: 14px; }
+
+.hud-signal-bars .bar.active {
+  background: var(--core-orange-400);
+  box-shadow: 0 0 6px var(--core-orange-glow);
+}
+
+/* Scrollable HUD content */
+.hud-content-scroll {
+  flex: 1;
+  padding: 14px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hud-dim) transparent;
+}
+
+.hud-content-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hud-content-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-hud-dim);
+}
+
+/* HUD Information Block */
+.hud-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hud-dim);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: border-color var(--trans-fast);
+}
+
+.hud-block:hover {
+  border-color: var(--border-hud);
+}
+
+.block-title {
+  font-family: var(--font-hud);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--core-orange-300);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 140, 0, 0.1);
+}
+
+/* ==========================================================================
+   CHRONO TELEMETRY BLOCK
+   ========================================================================== */
+
+.chrono-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.chrono-time {
+  font-family: var(--font-brand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-bright);
+  text-shadow: var(--hud-text-glow);
+}
+
+.chrono-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--core-orange-200);
+  letter-spacing: 1px;
+}
+
+.chrono-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.sub-pill {
+  color: var(--accent-cyan);
+}
+
+.sub-uptime span {
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   STATUS MATRIX BLOCK
+   ========================================================================== */
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.status-name {
+  font-family: var(--font-hud);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.state-online {
+  background: rgba(0, 230, 118, 0.12);
+  color: var(--status-online);
+  border: 1px solid rgba(0, 230, 118, 0.35);
+}
+
+.status-badge.state-ready {
+  background: rgba(0, 176, 255, 0.12);
+  color: var(--status-ready);
+  border: 1px solid rgba(0, 176, 255, 0.35);
+}
+
+.status-badge.state-standby {
+  background: rgba(255, 170, 0, 0.12);
+  color: var(--status-standby);
+  border: 1px solid rgba(255, 170, 0, 0.35);
+}
+
+.status-badge.state-idle {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.status-badge.state-busy {
+  background: rgba(255, 145, 0, 0.15);
+  color: var(--status-busy);
+  border: 1px solid var(--status-busy);
+  animation: pulseNeon 1s infinite;
+}
+
+/* ==========================================================================
+   DIAGNOSTIC SENSORS BLOCK
+   ========================================================================== */
+
+.diag-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.metric-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-hud);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.metric-info span:last-child {
+  font-family: var(--font-mono);
+  color: var(--core-orange-200);
+}
+
+.metric-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  background: var(--core-orange-400);
+  box-shadow: 0 0 6px var(--core-orange-glow);
+  transition: width 0.4s ease;
+}
+
+.diag-tags-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.diag-tag {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-hud-dim);
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-lbl {
+  font-family: var(--font-hud);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.tag-val {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-bright);
+}
+
+/* ==========================================================================
+   PROTOCOLS BLOCK
+   ========================================================================== */
+
+.protocol-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.protocol-list li {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.protocol-list li i {
+  color: var(--core-orange-300);
+  margin-right: 6px;
+}
+
+.active-val {
+  color: var(--status-online);
+  font-weight: 700;
+}

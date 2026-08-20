@@ -1,0 +1,265 @@
+/* ==========================================================================
+   S.U.N.D.A.Y AI DESKTOP ASSISTANT — CORE SECTION STYLES (css/core.css)
+   ========================================================================== */
+
+.panel-left-core {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Core State Indicator Badge */
+.core-state-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 10px;
+  background: rgba(255, 140, 0, 0.08);
+  border: 1px solid var(--border-hud);
+  border-radius: 2px;
+  font-family: var(--font-hud);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  transition: all var(--trans-norm);
+}
+
+.state-indicator-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--core-orange-400);
+  box-shadow: 0 0 8px var(--core-orange-500);
+  transition: all var(--trans-norm);
+}
+
+.state-indicator-text {
+  color: var(--core-orange-200);
+  transition: color var(--trans-norm);
+}
+
+/* Dynamic State Badge Themes */
+.core-state-badge[data-state="idle"] .state-indicator-dot {
+  background: var(--core-orange-400);
+  box-shadow: 0 0 8px var(--core-orange-500);
+}
+
+.core-state-badge[data-state="listening"] {
+  border-color: var(--accent-cyan);
+  background: rgba(0, 229, 255, 0.12);
+}
+.core-state-badge[data-state="listening"] .state-indicator-dot {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan);
+  animation: pulseNeon 0.9s infinite ease-in-out;
+}
+.core-state-badge[data-state="listening"] .state-indicator-text {
+  color: #80f0ff;
+}
+
+.core-state-badge[data-state="thinking"] {
+  border-color: var(--status-standby);
+  background: rgba(255, 170, 0, 0.18);
+}
+.core-state-badge[data-state="thinking"] .state-indicator-dot {
+  background: var(--status-standby);
+  box-shadow: 0 0 14px var(--status-standby);
+  animation: pulseNeon 0.5s infinite ease-in-out;
+}
+.core-state-badge[data-state="thinking"] .state-indicator-text {
+  color: #ffe082;
+}
+
+.core-state-badge[data-state="speaking"] {
+  border-color: var(--core-orange-300);
+  background: rgba(255, 106, 0, 0.22);
+}
+.core-state-badge[data-state="speaking"] .state-indicator-dot {
+  background: var(--core-orange-300);
+  box-shadow: 0 0 16px var(--core-orange-400);
+  animation: pulseNeon 0.35s infinite ease-in-out;
+}
+.core-state-badge[data-state="speaking"] .state-indicator-text {
+  color: var(--core-orange-100);
+}
+
+.core-state-badge[data-state="error"] {
+  border-color: var(--status-error);
+  background: rgba(255, 61, 0, 0.18);
+}
+.core-state-badge[data-state="error"] .state-indicator-dot {
+  background: var(--status-error);
+  box-shadow: 0 0 10px var(--status-error);
+}
+.core-state-badge[data-state="error"] .state-indicator-text {
+  color: #ff8a80;
+}
+
+/* ==========================================================================
+   CORE VIEWPORT & CANVAS CONTAINER
+   ========================================================================== */
+
+.core-viewport {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
+  overflow: hidden;
+  background: radial-gradient(circle at center, rgba(255, 106, 0, 0.05) 0%, transparent 68%);
+}
+
+.core-canvas-wrapper {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#sundayCoreCanvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+  z-index: 2;
+  filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.35));
+}
+
+/* Concentric SVG HUD Overlay Rings */
+.core-hud-ring {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.ring-outer-scan {
+  border: 1px dashed rgba(255, 140, 0, 0.28);
+  animation: rotateRingClockwise 36s linear infinite;
+}
+
+.ring-tech-ticks {
+  inset: 10px;
+  border: 1px dotted rgba(255, 170, 0, 0.2);
+  animation: rotateRingCounter 24s linear infinite;
+}
+
+.ring-data-reticle {
+  inset: -28px;
+  border: 1px solid rgba(255, 140, 0, 0.12);
+  border-top: 2px solid var(--core-orange-400);
+  border-bottom: 2px solid var(--core-orange-400);
+  animation: rotateRingClockwise 48s linear infinite;
+}
+
+@keyframes rotateRingClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateRingCounter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* ==========================================================================
+   VOICE WAVEFORM VISUALIZER
+   ========================================================================== */
+
+.voice-waveform-container {
+  width: 100%;
+  max-width: 370px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(6, 9, 14, 0.65);
+  border: 1px solid var(--border-hud-dim);
+  border-left: 2px solid var(--core-orange-400);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.waveform-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.wf-label {
+  font-family: var(--font-hud);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.wf-label i {
+  color: var(--core-orange-300);
+  margin-right: 4px;
+}
+
+.wf-state {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--core-orange-300);
+}
+
+#voiceWaveformCanvas {
+  width: 100%;
+  height: 38px;
+  display: block;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   CORE FOOTER TELEMETRY METERS
+   ========================================================================== */
+
+.core-footer-telemetry {
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.28);
+  border-top: 1px solid var(--border-hud-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.telemetry-stat {
+  display: grid;
+  grid-template-columns: 115px 1fr 55px;
+  align-items: center;
+  gap: 10px;
+}
+
+.telemetry-stat .stat-label {
+  font-family: var(--font-hud);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.stat-bar-track {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--core-orange-500), var(--core-orange-300));
+  box-shadow: 0 0 8px var(--core-orange-glow);
+  transition: width var(--trans-norm);
+}
+
+.telemetry-stat .stat-val {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--core-orange-200);
+  text-align: right;
+}

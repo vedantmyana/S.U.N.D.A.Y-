@@ -1,0 +1,117 @@
+/* ==========================================================================
+   S.U.N.D.A.Y AI DESKTOP ASSISTANT — RESPONSIVE DESIGN (css/responsive.css)
+   ========================================================================== */
+
+/* Large Desktop Screens (1920x1080 and above) */
+@media (min-width: 1700px) {
+  .hud-main-grid {
+    grid-template-columns: 500px 1fr 380px;
+    gap: 16px;
+  }
+  
+  .core-canvas-wrapper {
+    width: 380px;
+    height: 380px;
+  }
+}
+
+/* Standard Laptops & Desktops (1440px to 1699px) */
+@media (max-width: 1699px) and (min-width: 1366px) {
+  .hud-main-grid {
+    grid-template-columns: 440px 1fr 330px;
+    gap: 12px;
+  }
+
+  .core-canvas-wrapper {
+    width: 310px;
+    height: 310px;
+  }
+}
+
+/* Compact Laptop Displays (1200px to 1365px) */
+@media (max-width: 1365px) {
+  .hud-main-grid {
+    grid-template-columns: 380px 1fr 290px;
+    gap: 10px;
+  }
+
+  .core-canvas-wrapper {
+    width: 270px;
+    height: 270px;
+  }
+
+  .panel-title {
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+  }
+
+  .chrono-time {
+    font-size: 1.3rem;
+  }
+
+  .top-bar-center {
+    display: none; /* Hide ticker on compact header */
+  }
+}
+
+/* Smaller Viewports / Tablets (Below 1200px) */
+@media (max-width: 1199px) {
+  .hud-container {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  html, body {
+    overflow: auto;
+  }
+
+  .hud-main-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    overflow: visible;
+  }
+
+  .panel-left-core, .panel-center-chat, .panel-right-hud {
+    min-height: 480px;
+  }
+
+  .conversation-log {
+    max-height: 500px;
+  }
+}
+
+/* Height Constraint Adaptations (< 800px vertical) */
+@media (max-height: 800px) and (min-width: 1200px) {
+  .hud-top-bar {
+    height: 40px;
+  }
+
+  .hud-bottom-bar {
+    height: 38px;
+  }
+
+  .panel-header {
+    height: 38px;
+  }
+
+  .core-canvas-wrapper {
+    width: 250px;
+    height: 250px;
+  }
+
+  .core-footer-telemetry {
+    padding: 8px 12px;
+    gap: 4px;
+  }
+
+  .voice-waveform-container {
+    margin-top: 4px;
+    padding: 4px 8px;
+  }
+
+  .conversation-log {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+}

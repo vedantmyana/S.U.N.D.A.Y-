@@ -1,0 +1,456 @@
+/* ==========================================================================
+   S.U.N.D.A.Y AI DESKTOP ASSISTANT — CHAT & CONVERSATION STYLES (css/chat.css)
+   ========================================================================== */
+
+.panel-center-chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hud-mini-btn {
+  background: transparent;
+  border: 1px solid var(--border-hud-dim);
+  color: var(--text-secondary);
+  font-family: var(--font-hud);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--trans-fast);
+}
+
+.hud-mini-btn:hover {
+  background: rgba(255, 140, 0, 0.12);
+  border-color: var(--border-hud);
+  color: var(--text-bright);
+}
+
+.chat-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-dot.green {
+  background: var(--status-online);
+  box-shadow: 0 0 6px var(--status-online);
+}
+
+/* ==========================================================================
+   CONVERSATION LOG CONSOLE
+   ========================================================================== */
+
+.conversation-log {
+  flex: 1;
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hud) transparent;
+}
+
+.conversation-log::-webkit-scrollbar {
+  width: 5px;
+}
+
+.conversation-log::-webkit-scrollbar-thumb {
+  background: var(--border-hud);
+  border-radius: 3px;
+}
+
+/* Base Message Structure */
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 86%;
+  animation: slideFadeIn 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* System Directives / Events */
+.chat-message.message-system {
+  align-self: center;
+  max-width: 95%;
+  background: rgba(255, 140, 0, 0.05);
+  border: 1px dashed var(--border-hud-dim);
+  padding: 6px 14px;
+  border-radius: 2px;
+}
+
+.message-system .message-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--core-orange-300);
+  margin-bottom: 2px;
+}
+
+.message-system .message-content p {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* USER Messages (Right-aligned or designated side) */
+.chat-message.message-user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message-user .message-sender {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-family: var(--font-hud);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--accent-cyan);
+}
+
+.message-user .sender-avatar {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+}
+
+.message-user .message-bubble {
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 10px 16px;
+  color: var(--text-bright);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  clip-path: polygon(
+    0 0, 
+    calc(100% - 10px) 0, 
+    100% 10px, 
+    100% 100%, 
+    10px 100%, 
+    0 calc(100% - 10px)
+  );
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.08);
+}
+
+.message-user .message-bubble p {
+  user-select: text;
+}
+
+/* S.U.N.D.A.Y Messages (Left-aligned) */
+.chat-message.message-sunday {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.message-sunday .message-sender {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--core-orange-300);
+}
+
+.message-sunday .sender-avatar {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--core-orange-400);
+}
+
+.message-time {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.message-sunday .message-bubble {
+  background: rgba(255, 140, 0, 0.06);
+  border: 1px solid var(--border-hud-bright);
+  padding: 12px 18px;
+  color: var(--text-primary);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  clip-path: polygon(
+    10px 0, 
+    100% 0, 
+    100% calc(100% - 10px), 
+    calc(100% - 10px) 100%, 
+    0 100%, 
+    0 10px
+  );
+  box-shadow: var(--hud-glow-box);
+}
+
+.message-sunday .message-bubble p {
+  user-select: text;
+}
+
+.message-sunday .message-bubble strong {
+  color: var(--core-orange-200);
+  font-weight: 600;
+}
+
+/* Bubble Action Chips */
+.bubble-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.action-chip {
+  font-family: var(--font-hud);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  padding: 2px 8px;
+  background: rgba(255, 140, 0, 0.12);
+  border: 1px solid var(--border-hud);
+  border-radius: 2px;
+  color: var(--core-orange-200);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ==========================================================================
+   THINKING / PROCESSING INDICATOR
+   ========================================================================== */
+
+.chat-thinking-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  margin: 0 16px 8px;
+  background: rgba(255, 140, 0, 0.08);
+  border: 1px solid var(--border-hud);
+  font-family: var(--font-hud);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--core-orange-300);
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+
+.thinking-spinner {
+  color: var(--core-orange-400);
+}
+
+/* ==========================================================================
+   BOTTOM COMMAND & VOICE INPUT BAR
+   ========================================================================== */
+
+.command-input-wrapper {
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border-top: 1px solid var(--border-hud);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-hud-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-input);
+  border: 1px solid var(--border-hud);
+  padding: 2px 6px 2px 14px;
+  transition: all var(--trans-norm);
+  clip-path: polygon(
+    0 0, 
+    calc(100% - 10px) 0, 
+    100% 10px, 
+    100% 100%, 
+    10px 100%, 
+    0 calc(100% - 10px)
+  );
+}
+
+.input-hud-frame:focus-within {
+  border-color: var(--core-orange-300);
+  box-shadow: 0 0 18px rgba(255, 140, 0, 0.3);
+}
+
+.input-prompt-label {
+  color: var(--core-orange-400);
+  font-family: var(--font-brand);
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.hud-text-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-bright);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  padding: 10px 4px;
+}
+
+.hud-text-input::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-hud);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.input-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* FUTURISTIC MICROPHONE BUTTON */
+.hud-voice-btn {
+  position: relative;
+  width: 44px;
+  height: 40px;
+  background: rgba(255, 140, 0, 0.1);
+  border: 1px solid var(--border-hud);
+  color: var(--core-orange-300);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 2px;
+  transition: all var(--trans-norm);
+  overflow: hidden;
+}
+
+.mic-icon {
+  font-size: 0.95rem;
+  transition: transform var(--trans-fast);
+}
+
+.mic-badge-state {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.hud-voice-btn:hover {
+  background: rgba(255, 140, 0, 0.22);
+  border-color: var(--core-orange-300);
+}
+
+/* Microphone States */
+.hud-voice-btn.state-idle {
+  color: var(--core-orange-300);
+}
+
+.hud-voice-btn.state-listening {
+  background: rgba(0, 229, 255, 0.25);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.5);
+  animation: micPulse 1.2s infinite;
+}
+
+.hud-voice-btn.state-listening .mic-badge-state {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.hud-voice-btn.state-processing {
+  background: rgba(255, 170, 0, 0.25);
+  border-color: var(--status-standby);
+  color: var(--status-standby);
+}
+
+@keyframes micPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); box-shadow: 0 0 20px var(--accent-cyan); }
+}
+
+/* SEND COMMAND BUTTON */
+.hud-send-btn {
+  width: 40px;
+  height: 40px;
+  background: var(--core-orange-500);
+  border: 1px solid var(--core-orange-300);
+  color: var(--bg-void);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all var(--trans-fast);
+}
+
+.hud-send-btn:hover {
+  background: var(--core-orange-400);
+  box-shadow: 0 0 14px var(--core-orange-glow);
+}
+
+.hud-send-btn:active {
+  transform: scale(0.96);
+}
+
+.input-keyboard-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.input-keyboard-hint kbd {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  padding: 0 4px;
+  color: var(--text-secondary);
+}
